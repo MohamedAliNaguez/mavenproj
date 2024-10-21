@@ -1,36 +1,23 @@
 pipeline {
     agent any
 
-    triggers {
-        // Temporarily disabling polling for testing. Uncomment when using pollSCM.
-        cron('* * * * *') 
+    tools {
+        jdk 'JAVA_HOME'
+        maven 'M2_HOME'
     }
 
     stages {
-        stage('Récupération du code source') {
+        stage('GIT') {
             steps {
-                // Clone the code source from the Git repository.
-                git branch: 'main', url: 'https://github.com/MohamedAliNaguez/mavenproj.git'
+                git branch: 'master',
+                    url: 'https://github.com/hwafa/timesheetproject.git'
             }
         }
 
-        stage('Affichage de la date système') {
+        stage('Compile Stage') {
             steps {
-                // Display the current system date.
-                script {
-                    def date = new Date()
-                    echo "La date actuelle est : ${date}"
-                }
+                sh 'mvn clean compile'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build terminé avec succès.'
-        }
-        failure {
-            echo 'Le build a échoué.'
         }
     }
 }
