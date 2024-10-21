@@ -3,17 +3,14 @@ pipeline {
 
     triggers {
         // Temporarily disabling polling for testing. Uncomment when using pollSCM.
-        // pollSCM('H/5 * * * *') // Polls every 5 minutes. Replace with webhook later.
+        cron('* * * * *') 
     }
 
     stages {
         stage('Récupération du code source') {
             steps {
                 // Clone the code source from the Git repository.
-                // If your repository is private, ensure to use the 'credentialsId' below.
                 git branch: 'main', url: 'https://github.com/MohamedAliNaguez/mavenproj.git'
-                // For private repos, add the credentialsId as follows:
-                // git branch: 'main', url: 'https://github.com/MohamedAliNaguez/mavenproj.git', credentialsId: 'your-credentials-id'
             }
         }
 
